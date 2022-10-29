@@ -2,6 +2,20 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
+type Todo {
+  id: Int!
+  description: String!
+  done: Boolean!
+}
+
+"""Todo quick aggregations"""
+type AgreggationsType {
+  total: Int!
+  pending: Int!
+  completed: Int!
+  totalTodos: Int! @deprecated(reason: "Most use completed instead")
+}
+
 type Query {
   """Query de Hola Mundo"""
   hello: String!
@@ -9,4 +23,43 @@ type Query {
 
   """Number from zero to"""
   randomFromZeroTo(to: Int): Int!
+
+  """Return all todos"""
+  todos(
+    """Status Todo"""
+    status: Boolean
+  ): [Todo!]!
+
+  """Return todo by id"""
+  todo(id: Int!): Todo!
+  totalTodos: Int!
+  completedTodos: Int!
+  pendingTodos: Int!
+  aggregations: AgreggationsType!
+}
+
+type Mutation {
+  """Create new Todo"""
+  createTodo(createTodoInput: CreateTodoInput!): Todo!
+
+  """Update Todo"""
+  updateTodo(updateTodoInput: UpdateTodoInput!): Todo!
+
+  """Delete todo by id"""
+  deleteTodo(id: Int!): String!
+}
+
+input CreateTodoInput {
+  """You need fill this field"""
+  description: String!
+}
+
+input UpdateTodoInput {
+  id: Int!
+
+  """You need fill this field"""
+  description: String
+
+  """Check todo"""
+  done: Boolean
 }
