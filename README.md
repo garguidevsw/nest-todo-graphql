@@ -58,3 +58,35 @@ yarn add apollo-server-core
   ...
 })
 ```
+
+## Primeros Pasos
+
+- Crear modulo en Nest
+```
+nest g mo helloWorld --no-spec
+```
+
+- Crear resolver en Nest
+```
+nest g r helloWorld --no-spec
+```
+
+- Primeros Query's
+``` TS
+@Query( () => String, {
+    description: 'Query de Hola Mundo',
+    name: 'hello'
+})
+helloWorld(): string {
+    return 'Hello World!!';
+}
+```
+
+- Query's con Argumentos
+``` TS
+@Query( () => Int, { name: 'randomFromZeroTo', description: 'Number from zero to'} )
+  getRandomFromZeroTo( 
+      @Args('to', { nullable: true, type: () => Int }) to: number = 6): number {
+    return Math.floor( Math.random() * to );
+  }
+```
